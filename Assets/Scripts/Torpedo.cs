@@ -2,51 +2,53 @@ using UnityEngine;
 
 public class Torpedo : MonoBehaviour
 {
-    public float speed = 10f; // Speed at which the torpedo moves forward
-    public float activationDelay = 2f; // Time delay before the torpedo becomes active
-    public float explosionRadius = 5f; // Radius of the explosion
-    public int explosionDamage = 50; // Damage inflicted by the explosion
+    public float torpedoSpeed = 2f;  // Speed of the torpedo
+    public float torpedoLifetime = 5f;  // Lifetime of the torpedo in seconds
+    public float armingDelay = 2f;  // Delay before the torpedo arms itself
 
-    private Rigidbody2D torpedoRigidbody;
-    private bool isActive = false;
+    private Rigidbody2D rb;
+    private float timer;
+    private bool isArmed;
 
-    private void Awake()
+    public GameObject explosion;
+
+    void Start()
     {
-        torpedoRigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        timer = 0f;
+        isArmed = false;
     }
 
-    private void Update()
+    void Update()
     {
-        MoveForward();
-    }
-
-    private void MoveForward()
-    {
-        torpedoRigidbody.velocity = transform.up * speed;
-    }
-
-    private void Explode()
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
-        foreach (Collider2D collider in colliders)
+        if (!isArmed)
         {
-            // Check if the collider belongs to a creature or enemy
-            /*Creature creature = collider.GetComponent<Creature>();
-            if (creature != null)
+            timer += Time.deltaTime;
+
+            // Check if the arming delay has passed
+            if (timer >= armingDelay)
             {
-                creature.TakeDamage(explosionDamage);
-            }*/
+                isArmed = true;
+            }
         }
-
-        // Destroy the torpedo after the explosion
-        Destroy(gameObject);
+        else
+        {
+            // Once armed, update the torpedo's behavior as before
+            timer += Time.deltaTime;
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void FixedUpdate()
     {
-        if (isActive)
+            rb.velocity = transform.up * torpedoSpeed;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isArmed && (collision.CompareTag("Enemie") || collision.CompareTag("Terrain")))
         {
-            Explode();
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(gameObject);  // Destroy the torpedo
         }
     }
 }

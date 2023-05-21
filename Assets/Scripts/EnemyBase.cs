@@ -16,7 +16,7 @@ public class EnemyBase : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        rb = GetComponent<Rigidbody2D>();
+        rb = transform.GetComponent<Rigidbody2D>();
     }
 
     private void Update()

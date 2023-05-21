@@ -7,6 +7,7 @@ TagManager:
   - Revealer
   - Treasure
   - Enemie
+  - Terrain
   layers:
   - Default
   - TransparentFX
