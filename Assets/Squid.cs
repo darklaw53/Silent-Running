@@ -37,6 +37,7 @@ public class Squid : EnemyBase
 
         // Smoothly rotate the squid towards the target
         rb.rotation = Mathf.MoveTowardsAngle(rb.rotation, rotationAngle, rotationSpeed * Time.deltaTime);
+        //Debug.Log("squid turning");
     }
 
     public void HaltMovement()

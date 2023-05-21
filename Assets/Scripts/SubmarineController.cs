@@ -143,12 +143,13 @@ public class SubmarineController : Singleton<SubmarineController>
 
     private void FixedUpdate()
     {
+        submarineRigidbody.angularVelocity += (submarineRigidbody.angularVelocity > 0 ? -1f : 1f)*Time.deltaTime*2f;
         // Apply forward movement based on currentSpeed
         submarineRigidbody.AddRelativeForce(Vector2.up * currentSpeed, ForceMode2D.Force);
     }
 
     public float CurrentVolume(){
-        return currentVolume;
+        return currentVolume*0.1f;
     }
 
     void OnCollisionEnter2D(Collision2D col)

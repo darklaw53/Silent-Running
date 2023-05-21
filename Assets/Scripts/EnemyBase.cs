@@ -41,14 +41,14 @@ public class EnemyBase : MonoBehaviour
         }
 
         if (target == null){
-            target = SubmarineController.Instance.transform;
+            //target = SubmarineController.Instance.transform;
         }
     }
 
     private void Attack()
     {
         // Perform attack logic here
-        Debug.Log("Enemy Base is attacking!");
+        //Debug.Log("Enemy Base is attacking!");
     }
 
     public void TakeDamage(int damageAmount)
@@ -69,9 +69,6 @@ public class EnemyBase : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject == SubmarineController.Instance){
-            SubmarineController.Instance.GetComponent<SubmarineHealth>().DealDamage();
-        }
         rb.velocity = -rb.velocity;
     }
 }
