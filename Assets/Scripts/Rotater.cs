@@ -5,6 +5,12 @@ using UnityEngine;
 public class Rotater : MonoBehaviour
 {
     public float spinSpeed = 100f;
+    private AudioSource audioSource;
+    private bool canPlayPing = false;
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -16,5 +22,15 @@ public class Rotater : MonoBehaviour
 
         // Apply the new rotation to the object
         transform.rotation = newRotation;
+
+        if (transform.rotation.eulerAngles.z > 270f){
+            if (canPlayPing){
+                canPlayPing = false;
+                audioSource.Play();
+            }
+        } else if (transform.rotation.eulerAngles.z > 90f){
+            canPlayPing = true;
+        }
+
     }
 }

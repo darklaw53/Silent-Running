@@ -69,6 +69,8 @@ public class EnemyBase : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        rb.velocity = -rb.velocity;
+        if (rb != null){
+            rb.velocity = -rb.velocity;
+        }
     }
 }

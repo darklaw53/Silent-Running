@@ -12,6 +12,12 @@ public class SubmarineHealth : MonoBehaviour
     public float damageFromHit = 20;
     float currentHealth;
     float invulTimer;
+    public AudioSource oneShotPlayer;
+    public AudioClip gameOverSfx;
+    public float gameOverSfxVolume = 1f;
+    private bool gameOver = false;
+    public AudioClip getHitSfx;
+    public float getHitSfxVolume = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +27,23 @@ public class SubmarineHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        healthText.text = "Oxygen:" + (int)(Mathf.Round(currentHealth));
         currentHealth -= (startingHealth/oxygenSeconds)*Time.deltaTime;
-        healthText.text = "Oxygen:" + ((int)(currentHealth));
         invulTimer -= Time.deltaTime;
-        if (currentHealth <= 0f){
-            currentHealth = startingHealth;
-            SceneManager.LoadScene("MainMenu");
+        if (currentHealth <= 0f && !gameOver){
+            gameOver = true;
+            oneShotPlayer.clip = gameOverSfx;
+            oneShotPlayer.volume = gameOverSfxVolume;
+            oneShotPlayer.Play();
+        }
+        if (gameOver){
+            if (oneShotPlayer.isPlaying){
+                currentHealth = 0f;
+            } else {
+                gameOver = false;
+                currentHealth = startingHealth;
+                SceneManager.LoadScene("MainMenu");
+            }
         }
     }
 
@@ -38,6 +55,7 @@ public class SubmarineHealth : MonoBehaviour
     {
         if (col.gameObject.GetComponent<EnemyBase>() != null && invulTimer <= 0){
             invulTimer = 0.5f;
+            oneShotPlayer.PlayOneShot(getHitSfx,getHitSfxVolume);
             DealDamage();
         }
     }

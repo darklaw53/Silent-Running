@@ -13,13 +13,21 @@ public class SubmarineController : Singleton<SubmarineController>
     private float currentSpeed = 0f;
     private bool isHalted = false;
     float boostSpeed = 1f;
+    float boostMultiplier = 2f;
     float currentVolume = 0f;
     float volumeMult = 2f;
     public GameObject headlights;
+    private AudioSource audioSource;
+    public AudioSource oneShotPlayer;
+    public AudioClip hitWallSfx;
+    public float hitWallSfxVolume = 1f;
+    private float speedOneFrameAgo;
+    private float speedThisFrame;
 
     private void Start()
     {
         submarineRigidbody = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -44,7 +52,7 @@ public class SubmarineController : Singleton<SubmarineController>
         // Boost
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            boostSpeed = 2f;
+            boostSpeed = boostMultiplier;
         } else {
             boostSpeed = 1f;
         }
@@ -143,17 +151,30 @@ public class SubmarineController : Singleton<SubmarineController>
 
     private void FixedUpdate()
     {
-        submarineRigidbody.angularVelocity += (submarineRigidbody.angularVelocity > 0 ? -1f : 1f)*Time.deltaTime*2f;
+        submarineRigidbody.angularVelocity += (submarineRigidbody.angularVelocity > 0 ? -1f : 1f)*Time.deltaTime*3f;
+        if (Mathf.Abs(submarineRigidbody.angularVelocity) < Time.deltaTime*4f){
+            submarineRigidbody.angularVelocity = 0f;
+        }
+        audioSource.volume = GetSpeedScalar();
         // Apply forward movement based on currentSpeed
         submarineRigidbody.AddRelativeForce(Vector2.up * currentSpeed, ForceMode2D.Force);
+        speedOneFrameAgo = speedThisFrame;
+        speedThisFrame = submarineRigidbody.velocity.magnitude;
     }
 
     public float CurrentVolume(){
         return currentVolume*0.1f;
     }
 
+    public float GetSpeedScalar(){
+        return speedOneFrameAgo*0.075f*boostSpeed;
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (col.gameObject.GetComponent<EnemyBase>() == null){
+            oneShotPlayer.PlayOneShot(hitWallSfx,hitWallSfxVolume*GetSpeedScalar()*2f);
+        }
         submarineRigidbody.velocity = -submarineRigidbody.velocity*0.5f;
         currentVolume += volumeMult*20f;
     }
