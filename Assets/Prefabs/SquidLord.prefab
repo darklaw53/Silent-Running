@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1782687553545390408}
   m_Layer: 0
   m_Name: SquidLord
-  m_TagString: Untagged
+  m_TagString: Enemie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,12 +148,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54fb033172cee6749ba07863833adfb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 10
   target: {fileID: 0}
   movementSpeed: 2
   attackRange: 3
   attackCooldown: 1.5
-  rb: {fileID: 0}
+  rb: {fileID: 1782687553545390408}
   thrustForce: 5
   agroRange: 10
   range: 10
