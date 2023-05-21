@@ -12,6 +12,10 @@ public class SubmarineController : Singleton<SubmarineController>
     private Rigidbody2D submarineRigidbody;
     private float currentSpeed = 0f;
     private bool isHalted = false;
+    float boostSpeed = 1f;
+    float currentVolume = 0f;
+    float volumeMult = 2f;
+    public GameObject headlights;
 
     private void Start()
     {
@@ -24,48 +28,77 @@ public class SubmarineController : Singleton<SubmarineController>
         ApplyDriftForce();
         ClampSpeed();
         HaltMovement();
+
+        currentVolume -= Time.deltaTime;
+
+        if (currentVolume <= 0f){
+            currentVolume = 0f;
+            headlights.SetActive(false);
+        } else {
+            headlights.SetActive(true);
+        }
     }
 
     private void HandleInput()
     {
+        // Boost
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            boostSpeed = 2f;
+        } else {
+            boostSpeed = 1f;
+        }
+
         // Throttle Up
         if (Input.GetKey(KeyCode.W))
         {
-            Vector2 strafeForce = transform.up * strafingSpeed;
+            Vector2 strafeForce = transform.up * strafingSpeed * boostSpeed;
             submarineRigidbody.AddForce(strafeForce, ForceMode2D.Force);
+
+            currentVolume += volumeMult * boostSpeed * Time.deltaTime;
         }
 
         // Throttle Down
         if (Input.GetKey(KeyCode.S))
         {
-            Vector2 strafeForce = -transform.up * strafingSpeed;
+            Vector2 strafeForce = -transform.up * strafingSpeed * boostSpeed;
             submarineRigidbody.AddForce(strafeForce, ForceMode2D.Force);
+
+            currentVolume += volumeMult * boostSpeed * Time.deltaTime;
         }
 
         // Turn Left
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+            transform.Rotate(Vector3.forward, rotationSpeed * boostSpeed * Time.deltaTime);
+
+            currentVolume += volumeMult * boostSpeed * Time.deltaTime;
         }
 
         // Turn Right
         if (Input.GetKey(KeyCode.E))
         {
-            transform.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
+            transform.Rotate(Vector3.forward, -rotationSpeed * boostSpeed * Time.deltaTime);
+
+            currentVolume += volumeMult * boostSpeed * Time.deltaTime;
         }
 
         // Strafe Left
         if (Input.GetKey(KeyCode.A))
         {
-            Vector2 strafeForce = -transform.right * strafingSpeed;
+            Vector2 strafeForce = -transform.right * strafingSpeed * boostSpeed;
             submarineRigidbody.AddForce(strafeForce, ForceMode2D.Force);
+
+            currentVolume += volumeMult * boostSpeed * Time.deltaTime;
         }
 
         // Strafe Right
         if (Input.GetKey(KeyCode.D))
         {
-            Vector2 strafeForce = transform.right * strafingSpeed;
+            Vector2 strafeForce = transform.right * strafingSpeed * boostSpeed;
             submarineRigidbody.AddForce(strafeForce, ForceMode2D.Force);
+
+            currentVolume += volumeMult * boostSpeed * Time.deltaTime;
         }
     }
 
@@ -81,7 +114,7 @@ public class SubmarineController : Singleton<SubmarineController>
     private void ClampSpeed()
     {
         // Clamp the current speed to the maximum speed (both positive and negative)
-        currentSpeed = Mathf.Clamp(currentSpeed, -maxSpeed, maxSpeed);
+        currentSpeed = Mathf.Clamp(currentSpeed, -maxSpeed * boostSpeed, maxSpeed * boostSpeed);
     }
 
     private void HaltMovement()
@@ -96,6 +129,11 @@ public class SubmarineController : Singleton<SubmarineController>
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, haltDeceleration * Time.deltaTime);
 
+            currentVolume -= volumeMult * boostSpeed * Time.deltaTime;
+            if (currentVolume <= 0f){
+                currentVolume = 0f;
+            }
+
             if (Mathf.Approximately(currentSpeed, 0f))
             {
                 isHalted = false;
@@ -107,5 +145,15 @@ public class SubmarineController : Singleton<SubmarineController>
     {
         // Apply forward movement based on currentSpeed
         submarineRigidbody.AddRelativeForce(Vector2.up * currentSpeed, ForceMode2D.Force);
+    }
+
+    public float CurrentVolume(){
+        return currentVolume;
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        submarineRigidbody.velocity = -submarineRigidbody.velocity*0.5f;
+        currentVolume += volumeMult*20f;
     }
 }

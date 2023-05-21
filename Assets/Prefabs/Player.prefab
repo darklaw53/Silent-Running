@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2849865147429160735}
   - component: {fileID: 2849865147429160721}
   - component: {fileID: 2849865147429160734}
+  - component: {fileID: 3839029091521709205}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -58,6 +59,7 @@ MonoBehaviour:
   driftForce: 0.01
   maxSpeed: 0.05
   haltDeceleration: 10
+  headlights: {fileID: 2849865148860439883}
 --- !u!50 &2849865147429160735
 Rigidbody2D:
   serializedVersion: 4
@@ -77,7 +79,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &2849865147429160721
 BoxCollider2D:
@@ -119,6 +121,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: Treasure
   scoreText: {fileID: 0}
+--- !u!114 &3839029091521709205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849865147429160730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d64bb56d17bd4621b1a17b74fadbdfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthText: {fileID: 0}
+  startingHealth: 100
+  oxygenSeconds: 300
+  damageFromHit: 20
 --- !u!1 &2849865147708195639
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,6 +148,7 @@ GameObject:
   - component: {fileID: 2849865147708195638}
   - component: {fileID: 2849865147708196040}
   - component: {fileID: 2849865147708196041}
+  - component: {fileID: 5489125711346291772}
   m_Layer: 6
   m_Name: TreasureChest (1)
   m_TagString: Treasure
@@ -212,7 +231,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2849865147708195639}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -231,6 +250,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7685, y: 0.5656686}
   m_EdgeRadius: 0
+--- !u!70 &5489125711346291772
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849865147708195639}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 3.3}
+  m_Direction: 0
 --- !u!1 &2849865147718664176
 GameObject:
   m_ObjectHideFlags: 0

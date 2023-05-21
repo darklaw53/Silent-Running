@@ -22,7 +22,7 @@ public class EnemyBase : MonoBehaviour
     private void Update()
     {
         // Check if the target is within attack range
-        if (target != null && Vector2.Distance(transform.position, target.position) <= attackRange)
+        if (target != null && Vector2.Distance(transform.position, target.position) <= (attackRange))
         {
             // Check if the attack cooldown has expired
             if (Time.time >= nextAttackTime)
@@ -38,6 +38,10 @@ public class EnemyBase : MonoBehaviour
             {
                 transform.position = Vector2.MoveTowards(transform.position, target.position, movementSpeed * Time.deltaTime);
             }
+        }
+
+        if (target == null){
+            target = SubmarineController.Instance.transform;
         }
     }
 
@@ -61,5 +65,13 @@ public class EnemyBase : MonoBehaviour
     {
         // Destroy the enemy base
         Destroy(gameObject);
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject == SubmarineController.Instance){
+            SubmarineController.Instance.GetComponent<SubmarineHealth>().DealDamage();
+        }
+        rb.velocity = -rb.velocity;
     }
 }

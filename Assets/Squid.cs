@@ -19,7 +19,7 @@ public class Squid : EnemyBase
 
     public void RotateTowardsTarget()
     {
-        if (Vector2.Distance(SubmarineController.Instance.transform.position, transform.position) < agroRange)
+        if (Vector2.Distance(SubmarineController.Instance.transform.position, transform.position) < (agroRange*SubmarineController.Instance.CurrentVolume()))
         {
             targetPosition = SubmarineController.Instance.transform.position;
         }
