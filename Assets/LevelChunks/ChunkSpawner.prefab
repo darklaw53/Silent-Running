@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3039059444875854469}
+  - component: {fileID: 8757952010794041343}
   m_Layer: 0
   m_Name: ChunkSpawner
   m_TagString: Untagged
@@ -31,3 +32,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8757952010794041343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7555020837308207810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd48a178e7014c80a10479d12f7b813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chunkPrefabs:
+  - {fileID: 3774740945849438147, guid: fdc2475f6a3ef44e5b6f6c2977db6cc6, type: 3}
+  - {fileID: 3774740945849438147, guid: 160a64ad119e34ab69620c4c8493b232, type: 3}
