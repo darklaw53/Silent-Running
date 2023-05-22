@@ -1,14 +1,22 @@
 using UnityEngine;
+using TMPro;
 
 public class TorpedoLauncher : MonoBehaviour
 {
     public GameObject torpedoPrefab;  // Prefab for the torpedo
     public Transform torpedoSpawnPoint;  // Transform of the torpedo spawn point
+    public TextMeshProUGUI ammo;
+    float currentAmmo = 8;
+
+    private void Start()
+    {
+        ammo.text = "Torpedos x " + currentAmmo;
+    }
 
     void Update()
     {
         // Check if the spacebar is pressed
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) & currentAmmo > 0)
         {
             LaunchTorpedo();
         }
@@ -16,6 +24,8 @@ public class TorpedoLauncher : MonoBehaviour
 
     void LaunchTorpedo()
     {
+        currentAmmo--;
+        ammo.text = "Torpedos x " + currentAmmo;
         // Instantiate a torpedo at the spawn point
         GameObject torpedo = Instantiate(torpedoPrefab, torpedoSpawnPoint.position, torpedoSpawnPoint.rotation);
 

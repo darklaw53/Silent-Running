@@ -18,10 +18,15 @@ public class SubmarineHealth : MonoBehaviour
     private bool gameOver = false;
     public AudioClip getHitSfx;
     public float getHitSfxVolume = 1f;
+
+    public OxygenManager oxy;
+
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = startingHealth;
+        oxy.currentOxygen = startingHealth;
+        oxy.currentOxygen = currentHealth;
     }
 
     // Update is called once per frame
@@ -45,6 +50,8 @@ public class SubmarineHealth : MonoBehaviour
                 SceneManager.LoadScene("MainMenu");
             }
         }
+
+        oxy.currentOxygen = currentHealth;
     }
 
     public void DealDamage(){
