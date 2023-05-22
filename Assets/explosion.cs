@@ -4,6 +4,12 @@ public class explosion : MonoBehaviour
 {
     public float explosionRadius = 5f;  // Radius of the explosion
     public int explosionDamage = 10;  // Amount of damage to deal
+    public GameObject explosionSound;
+
+    void Start(){
+        GameObject go = Instantiate<GameObject>(explosionSound);
+        go.transform.position = transform.position;
+    }
 
     void OnDrawGizmosSelected()
     {

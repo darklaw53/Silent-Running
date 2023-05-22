@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2849865147429160733}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1777975207810967676
 MonoBehaviour:
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   torpedoPrefab: {fileID: 0}
   torpedoSpawnPoint: {fileID: 8336870228782886132}
+  ammo: {fileID: 0}
 --- !u!1 &2849865147429160730
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +86,9 @@ Transform:
   - {fileID: 2849865147893245995}
   - {fileID: 2849865147972014153}
   - {fileID: 2849865148860439882}
+  - {fileID: 4665072696640447212}
   - {fileID: 8336870228782886132}
+  - {fileID: 6152088175878309364}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -175,6 +178,9 @@ MonoBehaviour:
   oneShotPlayer: {fileID: 767686084224007228}
   treasureCollectSfx: {fileID: 8300000, guid: 8be70d5805801487683908ae0903d3b2, type: 3}
   treasureSfxVolume: 1
+  youWinSfx: {fileID: 8300000, guid: 7db1eb5a69d594b77bc18fdd187dc2eb, type: 3}
+  youWinSfxVolume: 1
+  winText: {fileID: 0}
 --- !u!114 &3839029091521709205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +202,7 @@ MonoBehaviour:
   gameOverSfxVolume: 1
   getHitSfx: {fileID: 8300000, guid: c672602e0c56d489dad4ba439b38a9cd, type: 3}
   getHitSfxVolume: 1
+  oxy: {fileID: 0}
 --- !u!82 &2132306014543921933
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1153,7 +1160,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2849865147429160733}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &7103945818911997125
 CircleCollider2D:

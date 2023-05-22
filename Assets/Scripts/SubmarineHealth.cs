@@ -18,6 +18,7 @@ public class SubmarineHealth : MonoBehaviour
     private bool gameOver = false;
     public AudioClip getHitSfx;
     public float getHitSfxVolume = 1f;
+    private float gameOverTimer = 8.7f;
 
     public OxygenManager oxy;
 
@@ -40,14 +41,17 @@ public class SubmarineHealth : MonoBehaviour
             oneShotPlayer.clip = gameOverSfx;
             oneShotPlayer.volume = gameOverSfxVolume;
             oneShotPlayer.Play();
+            gameOverTimer = 8.7f;
         }
         if (gameOver){
-            if (oneShotPlayer.isPlaying){
+            if (gameOverTimer > 0f){
                 currentHealth = 0f;
+                gameOverTimer -= Time.deltaTime;
             } else {
                 gameOver = false;
                 currentHealth = startingHealth;
                 SceneManager.LoadScene("MainMenu");
+                Destroy(this.gameObject);
             }
         }
 

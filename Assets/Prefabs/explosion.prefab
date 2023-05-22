@@ -121,3 +121,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionRadius: 0.94
   explosionDamage: 10
+  explosionSound: {fileID: 1062092366209843193, guid: a2907b516da0a4a8a955a7e6b621fc21, type: 3}
