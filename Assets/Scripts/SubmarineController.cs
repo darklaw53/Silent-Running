@@ -8,6 +8,7 @@ public class SubmarineController : Singleton<SubmarineController>
     public float driftForce = 1f;          // Force applied to simulate drifting when speed is zero
     public float maxSpeed = 10f;           // Maximum speed (both positive and negative)
     public float haltDeceleration = 10f;   // Speed reduction per second when halting movement
+    public Transform compass;
 
     private Rigidbody2D submarineRigidbody;
     private float currentSpeed = 0f;
@@ -24,6 +25,8 @@ public class SubmarineController : Singleton<SubmarineController>
     private float speedOneFrameAgo;
     private float speedThisFrame;
 
+    private Quaternion initialRotation;
+
     private void Start()
     {
         submarineRigidbody = GetComponent<Rigidbody2D>();
@@ -36,6 +39,7 @@ public class SubmarineController : Singleton<SubmarineController>
         ApplyDriftForce();
         ClampSpeed();
         HaltMovement();
+        RotateCompass();
 
         currentVolume -= Time.deltaTime;
 
@@ -44,6 +48,20 @@ public class SubmarineController : Singleton<SubmarineController>
             headlights.SetActive(false);
         } else {
             headlights.SetActive(true);
+        }
+    }
+
+    void RotateCompass()
+    {
+        if (transform.rotation.z == 0)
+        {
+            var newRot = new Quaternion(0, 0, 180, 0);
+            compass.rotation = newRot;
+        }
+        else
+        {
+            var newRot = new Quaternion(0, 0, transform.rotation.z * -1, 0);
+            compass.rotation = newRot;
         }
     }
 
@@ -79,6 +97,7 @@ public class SubmarineController : Singleton<SubmarineController>
         if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(Vector3.forward, rotationSpeed * boostSpeed * Time.deltaTime);
+            //compass.Rotate(Vector3.forward, -rotationSpeed * boostSpeed * Time.deltaTime);
 
             currentVolume += volumeMult * boostSpeed * Time.deltaTime;
         }
@@ -87,6 +106,7 @@ public class SubmarineController : Singleton<SubmarineController>
         if (Input.GetKey(KeyCode.E))
         {
             transform.Rotate(Vector3.forward, -rotationSpeed * boostSpeed * Time.deltaTime);
+            //compass.Rotate(Vector3.forward, rotationSpeed * boostSpeed * Time.deltaTime);
 
             currentVolume += volumeMult * boostSpeed * Time.deltaTime;
         }
