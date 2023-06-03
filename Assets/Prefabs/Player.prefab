@@ -110,6 +110,7 @@ MonoBehaviour:
   driftForce: 0.01
   maxSpeed: 0.05
   haltDeceleration: 10
+  compass: {fileID: 0}
   headlights: {fileID: 2849865148860439883}
   oneShotPlayer: {fileID: 767686084224007228}
   hitWallSfx: {fileID: 8300000, guid: 6ea745ed9fcac4713bbbda561b295be1, type: 3}
@@ -631,7 +632,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
